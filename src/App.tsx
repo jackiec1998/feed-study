@@ -91,7 +91,8 @@ function PostPreview({
   return <></>;
 }
 
-function Post(props) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Post(props: { post: any; retrieved_utc: number }) {
   const post = props.post;
 
   const content_type = Math.random() < 0.5 ? "text" : "link";
