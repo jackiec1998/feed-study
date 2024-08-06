@@ -178,7 +178,7 @@ function App() {
       <Header />
       <span>{new Date(snapshot.retrieved_utc * 1_000).toLocaleString()}</span>
 
-      <div
+      {/* <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -191,7 +191,7 @@ function App() {
             <Post post={post} retrieved_utc={snapshot.retrieved_utc} />
           </>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
