@@ -1,8 +1,0 @@
-/* .posts {
-  background-color: "green";
-} */
-
-.posts:hover {
-  background-color: "black !important";
-  color: blue;
-}

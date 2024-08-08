@@ -1,5 +1,5 @@
 // import snapshot from "./assets/snapshot.json";
-import "./styles.css";
+import "./index.css";
 
 // function kFormatter(n: number): string {
 //   if (n < 0) {
@@ -168,14 +168,34 @@ import "./styles.css";
 //   );
 // }
 
+// import Button from "@mui/material/Button";
+import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 function App() {
   return (
-    <div
-      style={{
-        fontFamily: "sans-serif",
-      }}
-    >
-      <h1>Hello, world.</h1>
+    <div>
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Taxing Laughter: The Joke Tax Chronicles
+      </h1>
+      <Button>Hello world</Button>
+
+      <p className="text-sky-400">asdfa</p>
+
+      <Accordion type="single" collapsible>
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Is it accessible?</AccordionTrigger>
+          <AccordionContent>
+            Yes. It adheres to the WAI-ARIA design pattern.
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       {/* <Header />
       <span>{new Date(snapshot.retrieved_utc * 1_000).toLocaleString()}</span> */}
 
