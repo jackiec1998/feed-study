@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import {
   createContext,
   ReactNode,
@@ -20,7 +20,7 @@ export const Context = createContext<{
   passcode: string;
   setPasscode: (passcode: string) => void;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}>({ passcode: "", setPasscode: (_passcode) => {} });
+}>({ passcode: "", setPasscode: (passcode) => {} });
 
 function ContextProvider({ children }: { children: ReactNode }) {
   const [passcode, setPasscode] = useState<string>("");
@@ -43,7 +43,7 @@ export function Feed() {
   // Check if the user provided a passcode.
   useEffect(() => {
     if (passcode === "") {
-      navigate("/");
+      navigate("/feed-study/");
     }
   });
 
@@ -57,12 +57,12 @@ export function Feed() {
 export function App() {
   return (
     <ContextProvider>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
-          <Route index path="/" element={<Start />} />
-          <Route path="/feed" element={<Feed />} />
+          <Route path="/feed-study/" element={<Start />} />
+          <Route path="/feed-study/feed" element={<Feed />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </ContextProvider>
   );
 }

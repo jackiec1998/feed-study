@@ -45,7 +45,7 @@ export function Start() {
   function onSubmit({ passcode }: z.infer<typeof formSchema>) {
     if (passcodes.includes(passcode)) {
       setPasscode(passcode);
-      navigate("/feed");
+      navigate("/feed-study/feed");
     } else {
       form.control.setError("passcode", {
         type: "custom",
