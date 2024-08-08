@@ -19,16 +19,20 @@ function Header() {
 export const Context = createContext<{
   passcode: string;
   setPasscode: (passcode: string) => void;
+  debug: boolean;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}>({ passcode: "", setPasscode: (passcode) => {} });
+}>({ passcode: "", setPasscode: (passcode) => {}, debug: false });
 
 function ContextProvider({ children }: { children: ReactNode }) {
+  const debug = true;
+
   const [passcode, setPasscode] = useState<string>("");
   return (
     <Context.Provider
       value={{
         passcode,
         setPasscode,
+        debug,
       }}
     >
       {children}
@@ -37,12 +41,12 @@ function ContextProvider({ children }: { children: ReactNode }) {
 }
 
 export function Feed() {
-  const { passcode } = useContext(Context);
+  const { passcode, debug } = useContext(Context);
   const navigate = useNavigate();
 
   // Check if the user provided a passcode.
   useEffect(() => {
-    if (passcode === "") {
+    if (passcode === "" && !debug) {
       navigate("/feed-study/");
     }
   });

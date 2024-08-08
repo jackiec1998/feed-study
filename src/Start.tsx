@@ -13,7 +13,7 @@ import {
 } from "./components/ui/form";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "./App";
 
 /**
@@ -33,7 +33,13 @@ const formSchema = z
 
 export function Start() {
   const navigate = useNavigate();
-  const { setPasscode } = useContext(Context);
+  const { setPasscode, debug } = useContext(Context);
+
+  useEffect(() => {
+    if (debug) {
+      navigate("/feed-study/feed");
+    }
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
