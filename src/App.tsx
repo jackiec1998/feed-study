@@ -1,11 +1,5 @@
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createContext, ReactNode, useState } from "react";
 import { Start } from "./Start";
 import { Feed } from "./components/Feed";
 
@@ -14,7 +8,7 @@ export const Context = createContext<{
   setPasscode: (passcode: string) => void;
   debug: boolean;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}>({ passcode: "", setPasscode: (passcode) => {}, debug: false });
+}>({ passcode: "", setPasscode: (_passcode) => {}, debug: false });
 
 function ContextProvider({ children }: { children: ReactNode }) {
   const debug = true;
@@ -32,8 +26,6 @@ function ContextProvider({ children }: { children: ReactNode }) {
     </Context.Provider>
   );
 }
-
-
 
 export function App() {
   return (
