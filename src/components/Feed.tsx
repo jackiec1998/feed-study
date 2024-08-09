@@ -75,6 +75,10 @@ function Interactions({ post }: { post: Post }) {
 }
 
 function Post(post: Post) {
+  // TODO: Add content previews for links and text posts.
+  // TODO: On hover (Tailwindcss?) on post, gray background.
+  // TODO: Write the time the post was created, relative to snapshot time: 1674629769.
+
   return (
     <div className="w-7/12">
       <div className="px-4 py-2">
