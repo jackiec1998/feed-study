@@ -7,14 +7,7 @@ import {
   useState,
 } from "react";
 import { Start } from "./Start";
-
-function Header() {
-  return (
-    <div className="flex-row p-2">
-      <span>{new Date().toLocaleString()}</span>
-    </div>
-  );
-}
+import { Feed } from "./components/Feed";
 
 export const Context = createContext<{
   passcode: string;
@@ -40,23 +33,7 @@ function ContextProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function Feed() {
-  const { passcode, debug } = useContext(Context);
-  const navigate = useNavigate();
 
-  // Check if the user provided a passcode.
-  useEffect(() => {
-    if (passcode === "" && !debug) {
-      navigate("/feed-study/");
-    }
-  });
-
-  return (
-    <>
-      <Header />
-    </>
-  );
-}
 
 export function App() {
   return (
