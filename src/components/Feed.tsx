@@ -9,6 +9,7 @@ import {
   ArrowDownIcon,
   ChatBubbleIcon,
 } from "@radix-ui/react-icons";
+import { Button } from "./ui/button";
 
 function Header() {
   const { passcode } = useContext(Context);
@@ -30,13 +31,13 @@ type Post = {
   author: string;
   score: number;
   numComments: number;
-  contentType: "link" | "text";
+  contentType: "link" | "text" | "image";
   url?: string;
   selftext?: string;
 };
 
 function VotingButtons({ post }: { post: Post }) {
-  const buttonConfig = "h-6 w-6 p-0";
+  const buttonConfig = "h-8 w-8 p-0 hover:bg-gray-300";
   const [vote, setVote] = useState<"up" | "down" | null>(null);
 
   return (
@@ -74,17 +75,67 @@ function Interactions({ post }: { post: Post }) {
   );
 }
 
+function TextPreview({ post }: { post: Post }) {
+  return <p className="line-clamp-4">{post.selftext}</p>;
+}
+
+function LinkPreview({ post }: { post: Post }) {
+  return (
+    <Button variant="link" className="px-0 text-blue-500">
+      {post.url}
+    </Button>
+  );
+}
+
+function ImagePreview({ post }: { post: Post }) {
+  return (
+    <div className="flex justify-center py-2">
+      <img src={post.url} className="max-h-96" />
+    </div>
+  );
+}
+
+function ContentPreview({ post }: { post: Post }) {
+  if (post.contentType === "text") {
+    return <TextPreview post={post} />;
+  } else if (post.contentType === "link") {
+    return <LinkPreview post={post} />;
+  } else if (post.contentType === "image") {
+    return <ImagePreview post={post} />;
+  }
+
+  return <></>;
+}
+
+function displayHoursAgo(seconds: number): string {
+  // Convert seconds to hours
+  const hours = Math.floor(seconds / 3600);
+
+  // Handle singular and plural cases
+  const hourText = hours === 1 ? "hr." : "hrs.";
+
+  // Return the formatted string
+  return `${hours} ${hourText} ago`;
+}
+
 function Post(post: Post) {
-  // TODO: Add content previews for links and text posts.
-  // TODO: On hover (Tailwindcss?) on post, gray background.
-  // TODO: Write the time the post was created, relative to snapshot time: 1674629769.
+  const { currentUTC } = useContext(Context);
+
+  // TODO: How do I preview video posts?
 
   return (
     <div className="w-7/12">
-      <div className="px-4 py-2">
-        <span className="text-xs font-semibold">r/{post.subreddit}</span>
-        <h2 className="text-lg font-bold">{post.title}</h2>
-        <Interactions post={post} />
+      <div className="my-1 py-2 hover:bg-gray-100 rounded-lg">
+        <div className="px-4">
+          <div className="flex flex-row gap-2 items-center text-xs font-semibold">
+            <span className="">r/{post.subreddit}</span>
+            <span>•</span>
+            <span>{displayHoursAgo(currentUTC - post.createdUTC)}</span>
+          </div>
+          <h2 className="text-lg font-bold">{post.title}</h2>
+          <ContentPreview post={post} />
+          <Interactions post={post} />
+        </div>
       </div>
       <Separator />
     </div>
@@ -126,6 +177,17 @@ function Content() {
       contentType: "text",
       selftext:
         "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.",
+    },
+    {
+      title: "Stuck on a train for 12 hours, alone.",
+      subreddit: "pics",
+      createdUTC: 1674613717,
+      author: "GodofAeons",
+      score: 19409,
+      numComments: 1107,
+      contentType: "image",
+      url: "https://i.redd.it/ih64wvqc65ea1.jpg",
+      // url: "https://mrwallpaper.com/images/hd/falling-stars-cell-phone-picture-6ate0hpx8kktsegm.jpg",
     },
   ];
 

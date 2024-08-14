@@ -7,11 +7,25 @@ export const Context = createContext<{
   passcode: string;
   setPasscode: (passcode: string) => void;
   debug: boolean;
+  currentUTC: number;
+}>({
+  passcode: "",
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}>({ passcode: "", setPasscode: (_passcode) => {}, debug: false });
+  setPasscode: (_passcode) => {},
+  debug: false,
+  currentUTC: Date.now(),
+});
 
 function ContextProvider({ children }: { children: ReactNode }) {
+  /**
+   * If you want to move past the passcode prompt.
+   */
   const debug = true;
+
+  /**
+   * This UTC is how the posts calculate it's relative recency.
+   */
+  const currentUTC = 1674629769;
 
   const [passcode, setPasscode] = useState<string>("");
   return (
@@ -20,6 +34,7 @@ function ContextProvider({ children }: { children: ReactNode }) {
         passcode,
         setPasscode,
         debug,
+        currentUTC,
       }}
     >
       {children}
