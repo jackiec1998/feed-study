@@ -118,20 +118,27 @@ function displayHoursAgo(seconds: number): string {
   return `${hours} ${hourText} ago`;
 }
 
-function Post(post: Post) {
+function AboveTitle({ post }: { post: Post }) {
   const { currentUTC } = useContext(Context);
+  return (
+    <div className="flex flex-row gap-2 items-center text-xs font-semibold">
+      <span className="">r/{post.subreddit}</span>
+      <span>•</span>
+      <span>{displayHoursAgo(currentUTC - post.createdUTC)}</span>
+    </div>
+  );
+}
 
+function Post(post: Post) {
   // TODO: How do I preview video posts?
 
   return (
-    <div className="w-7/12">
+    <div className="w-[42rem]">
+      {/* The size of the post. */}
       <div className="my-1 py-2 hover:bg-gray-100 rounded-lg">
+        {/* Grey on-hover box. */}
         <div className="px-4">
-          <div className="flex flex-row gap-2 items-center text-xs font-semibold">
-            <span className="">r/{post.subreddit}</span>
-            <span>•</span>
-            <span>{displayHoursAgo(currentUTC - post.createdUTC)}</span>
-          </div>
+          <AboveTitle post={post} />
           <h2 className="text-lg font-bold">{post.title}</h2>
           <ContentPreview post={post} />
           <Interactions post={post} />
@@ -192,7 +199,7 @@ function Content() {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-screen ">
+    <div className="flex flex-col items-center">
       {posts.map((post) => Post(post))}
     </div>
   );
